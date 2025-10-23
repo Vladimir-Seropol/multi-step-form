@@ -1,24 +1,20 @@
-import { useState, type ReactNode } from "react";
-import { FormContext, defaultData } from "./FormContext";
-import type { FormData, FormContextType } from "../types/types";
+import { useForm, FormProvider as RHFProvider } from "react-hook-form";
+import type { FormData, FormProviderProps } from "../types/types";
 
-export const FormProvider = ({ children }: { children: ReactNode }) => {
-  const [data, setData] = useState<FormData>(defaultData);
+export const FormProvider = ({ children }: FormProviderProps) => {
+  const methods = useForm<FormData>({
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      phone: "",
+      gender: "",
+      workPlace: "",
+      address: "",
+      loanAmount: 200,
+      loanTerm: 10,
+    },
+    mode: "onBlur",
+  });
 
-  const updateData = (newData: Partial<FormData>) =>
-    setData((prev) => ({ ...prev, ...newData }));
-
-  const resetForm = () => setData(defaultData);
-
-  const value: FormContextType = {
-    data,
-    updateData,
-    resetForm
-  };
-
-  return (
-    <FormContext.Provider value={value}>
-      {children}
-    </FormContext.Provider>
-  );
+  return <RHFProvider {...methods}>{children}</RHFProvider>;
 };

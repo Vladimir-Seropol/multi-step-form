@@ -11,14 +11,13 @@ export interface FormData {
   loanTerm: number;
 }
 
-export interface ValidationErrors {
-  [key: string]: string;
+export interface FormProviderProps {
+  children: ReactNode;
 }
 
-export interface FormContextType {
-  data: FormData;
-  updateData: (newData: Partial<FormData>) => void;
-  resetForm: () => void;
+export interface ProtectedRouteProps {
+  children: JSX.Element;
+  requiredFields: (keyof FormData)[];
 }
 
 export interface ModalProps {
@@ -28,6 +27,19 @@ export interface ModalProps {
   onClose: () => void;
   closeButtonText?: string;
   closeButtonProps?: Partial<ButtonProps>;
+}
+
+export interface FormFieldProps<T = string | number> {
+  label: string;
+  name: keyof FormData;
+  value: T;
+  onChange: (value: T) => void;
+  onBlur?: () => void;
+  error?: string;
+  type?: "text" | "select" | "range";
+  options?: string[];
+  placeholder?: string;
+  children?: ReactNode;
 }
 
 export interface FormButtonsProps {

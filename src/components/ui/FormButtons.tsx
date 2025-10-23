@@ -22,6 +22,7 @@ const FormButtons: React.FC<FormButtonsProps> = ({
     <div className="d-flex gap-2 mt-4">
       {!isFirstStep && (
         <Button
+          type="button"
           variant="secondary"
           onClick={onBack}
           disabled={isSubmitting}
@@ -33,18 +34,20 @@ const FormButtons: React.FC<FormButtonsProps> = ({
       
       {!isLastStep ? (
         <Button
+          type={nextButtonProps?.type || "button"}
           variant="primary"
+          disabled={isSubmitting || nextButtonProps?.disabled}
           onClick={onNext}
-          disabled={isSubmitting}
           {...nextButtonProps}
         >
           {nextLabel}
         </Button>
       ) : (
         <Button
+          type={submitButtonProps?.type || "button"}
           variant="success"
+          disabled={isSubmitting || submitButtonProps?.disabled}
           onClick={onSubmit}
-          disabled={isSubmitting}
           loading={isSubmitting}
           {...submitButtonProps}
         >
